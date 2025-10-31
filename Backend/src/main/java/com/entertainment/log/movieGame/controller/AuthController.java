@@ -1,13 +1,13 @@
 package com.entertainment.log.movieGame.controller;
 
-import com.entertainment.log.movieGame.dto.AuthResponse;
-import com.entertainment.log.movieGame.dto.LoginRequest;
-import com.entertainment.log.movieGame.dto.RegisterRequest;
+import com.entertainment.log.movieGame.dto.*;
 import com.entertainment.log.movieGame.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,4 +30,14 @@ public class AuthController {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/user/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateUserRequest request
+    ) {
+        UserResponse updatedUser = authService.updateUser(id, request);
+        return ResponseEntity.ok(updatedUser);
+    }
+
 }
